@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public string myname;
     private int timer = 15;
+    bool selected = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
+                timer = 15;
             }
             if (Input.GetKey(KeyCode.S))
             {
@@ -35,8 +36,20 @@ public class PlayerMovement : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
             }
-            timer = 15;
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+                    timer = 15;
+                }
 
+            }
+            
+
+
+        }
     }
 }
